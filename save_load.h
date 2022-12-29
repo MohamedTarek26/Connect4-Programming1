@@ -58,7 +58,6 @@ void read_save(game_t* saves)
     }
     i++;
   }
-  printf("nagemes:%d",n_games);
   fclose(fp);
 
 }

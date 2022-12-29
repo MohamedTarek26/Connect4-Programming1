@@ -1,8 +1,8 @@
 #ifndef XMLCONFIG_H_INCLUDED
 #define XMLCONFIG_H_INCLUDED
 
-int Height=7;
-int Width=6;
+int Height=9;
+int Width=7;
 int HighScores=10;
 
 int convert_int(char* s,int len)
@@ -56,6 +56,7 @@ int getVal(char*s,char*s1,char*s2)
 
 int ValidateXML(char*s)
 {
+    printf("I went here %s\n",s);
      if(strstr(s,"<Configuration>") && strstr(s,"</Configuration>"))
  {
     int start = strstr(s, "<Configuration>") + strlen("<Configuration>");
@@ -69,15 +70,21 @@ int ValidateXML(char*s)
     int h=getVal(substrC,"<Height>","</Height>");
     int w=getVal(substrC,"<Width>","</Width>");
     int hs=getVal(substrC,"<HighScores>","</HighScores>");
+
     if(!h || !w || !hs)
     {
         printf("Invalid XML\n");
         return 0;
     }
-    printf(" %d " ,h);
+    if (h<4 || w<4)
+    {
+        printf("Too small dimensions\n");
+        return 0;
+    }
     Height=h;
     Width=w;
     HighScores=hs;
+
     free(substrC);
     }
     else
@@ -114,16 +121,16 @@ void Load_Config()
  }while( !feof(fp) );
  fclose(fp);
  }
-
-
-if (!ValidateXML(s)|| !b)
+ bool tamam=ValidateXML(s);
+if (!b || !tamam)
 {
+for(int i=0;i<3;i++){
     printf("Enter a path to a valid Configuration file : \n");
     int b=1;
     char path[100];
     scanf("%s",path);
     FILE* fp;
-    char s[2048];
+    char ss[2048]=" ";
     fp = fopen(path, "r");
     if ( fp == NULL ){ b=0;printf("File error, can't read! \n");}
     else
@@ -134,16 +141,29 @@ if (!ValidateXML(s)|| !b)
     char ch=fgetc(fp);
     if(isgraph(ch))
     {
-        strncat(s, &ch, 1);
+        strncat(ss, &ch, 1);
     }
     }while( !feof(fp) );
     fclose(fp);
  }
-     if(!b||!ValidateXML(s) )
+ tamam=ValidateXML(ss);
+    if(b && tamam)
     {
-        printf("Then we use default values 7,6,10");
+        break;
     }
 }
 
+}
+
+    if(!b||!tamam)
+    {
+        printf("Then we use default values\nwidth=7\nheight=9\nhighscores=10\n");
+    }
+    else
+   {
+       printf("Values are:\nwidth=%d\nheight=%d\nhighscores=%d\n",Width,Height,HighScores);
+   }
+     printf("Press Any Key to Continue\n");
+getch();
 }
 #endif // XMLCONFIG_H_INCLUDED

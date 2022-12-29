@@ -96,6 +96,7 @@ void read_highscores(player_t* topscores)
 }
 void print_highscores(player_t* topscores,int n)
 {
+
   for (int i=MAX_HIGH_SCORES-1; i>=MAX_HIGH_SCORES-n; i--) {
     printf("%d. %s : %d\n",MAX_HIGH_SCORES-i,topscores[i].name ,topscores[i].score);
   }

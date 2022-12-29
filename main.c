@@ -10,6 +10,7 @@
 #include "highscores.h"
 #include "XMLConfig.h"
 #include "save_load.h"
+int g=1;
 void main_menu(game_t* saves,player_t* topscores)
 {
         int check_main_menu;
@@ -31,6 +32,7 @@ void main_menu(game_t* saves,player_t* topscores)
 
     system("cls");
     int ticks;
+    g=1;
     switch (check_main_menu)
     {
         case 1:
@@ -66,19 +68,27 @@ void main_menu(game_t* saves,player_t* topscores)
             {
                 printf("%d: game %d\n",k,k);
             }
-            int L;
-            L=integercheck();
+            printf("To go back press 0\n");
 
-            while(L<=0 || L>3 || L>n_games)
+            int L;
+
+
+            do
             {
+                L=integercheck();
                 printf("enter a valid load\n");
-                scanf("%d",&L);
+            }while(L<0 || L>3 || L>n_games);
+            system("cls");
+            if(!L)
+            {
+                break;
             }
             game_loop(saves[L].boardrows,saves[L].boardcolumns,saves[L].mode,L,saves);
             printf("Loading a saved game");
             system("cls");
             break ;
         case 4:
+            g=0;
             printf("Displaying top players\n");
             print_highscores(topscores,HighScores);
             system("cls");
@@ -125,7 +135,7 @@ int main()
     while(true)
     {
     main_menu(saves,topscores);
-    if(score_winner!=0)//after each game loop we save the score and name of the winner if there is a winner
+    if(score_winner!=0 && g)//after each game loop we save the score and name of the winner if there is a winner
         {
             char* s=name;
             int sc=score_winner;
@@ -133,8 +143,9 @@ int main()
             write_highscores(topscores);//writes new highscore data
             print_highscores(topscores,HighScores);//print rankings
         }
+        system("cls");
     }
-    system("cls");
+
 
 
     return 0;

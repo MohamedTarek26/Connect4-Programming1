@@ -1,12 +1,78 @@
 #ifndef GAMELOOP_H_INCLUDED
 #define GAMELOOP_H_INCLUDED
 
-#include"my_utils.h"
-#include"undo_redo.h"
-#include"scores.h"
+
+
 #include"save_load.h"
 #include"time_counter.h"
 #define MAXSIZE 1000
+int score(int h,int w,int* board[h],int player)
+{
+int  c=0;
+    // horizontalCheck
+    for (int i = 1; i<=h-3 ; i++ ){
+        for (int j = 1; j<=w; j++){
+            if (board[i][j] == player && board[i+1][j] == player && board[i+2][j] == player && board[i+3][j] == player){
+                c++;
+            }
+        }
+    }
+
+    // verticalCheck
+    for (int j = 1; j<=w-3 ; j++ ){
+        for (int i = 1; i<=h; i++){
+            if (board[i][j] == player && board[i][j+1] == player && board[i][j+2] == player && board[i][j+3] == player){
+                c++;
+            }
+        }
+    }
+
+    // ascendingDiagonalCheck
+    for (int j=4; j<=w; j++){
+        for (int i=1; i<=h-3; i++){
+            if (board[i][j] == player && board[i+1][j-1] == player && board[i+2][j-2] == player && board[i+3][j-3] == player)
+                c++;
+        }
+    }
+    // descendingDiagonalCheck
+    for (int j=4; j<=w; j++){
+        for (int i=4; i<=h; i++){
+
+            if (board[i][j] == player && board[i-1][j-1] == player && board[i-2][j-2] == player && board[i-3][j-3] == player)
+                c++;
+        }
+    }
+
+
+return c;
+}
+
+void undo(int col,int h,int w,int* board[h],int playern,int* curr_round,int max_round)
+{
+    system("cls");
+    if(*curr_round-1 <1)
+    {
+        printf("YOU CANOT UNDO!\n");
+        return;
+    }
+    int row=calc_row(col,h,w,board);
+    board[row-1][col]=0;
+    *curr_round=*curr_round-1;
+
+}
+void redo(int col,int h,int w,int* board[h],int playern,int* curr_round,int max_round)
+{
+    system("cls");
+    if(*curr_round+1 > max_round)
+    {
+        printf("YOU CANOT REDO!\n");
+        return;
+    }
+    int row=calc_row(col,h,w,board);
+    board[row][col]=playern;
+    *curr_round=*curr_round+1;
+
+}
 
 char name[10];
 int score_winner;
@@ -204,7 +270,7 @@ int integercheck()
     return integer;
 }
 
-bool checkvalid(int x,int y,int* connect[y],int col)
+bool checkvalid(int x,int y,int* connect[y],int col,int mode)
 {
     if(col==-1 || col==-2 || col==-3 || col==0 || col == -4)
         return true;
@@ -215,13 +281,15 @@ bool checkvalid(int x,int y,int* connect[y],int col)
             return true;
         else
         {
-            printf("Enter an empty column!!!\n");
+            if(mode)
+            {printf("Enter an empty column!!!\n");}
             return false;
         }
     }
     else
     {
-        printf("Enter a valid column!!!\n");
+        if(mode)
+        {printf("Enter a valid column!!!\n");}
         return false;
     }
 }
@@ -231,9 +299,9 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
 
     game_t game;
     bool is_saved=0;
-    int* board[h+1];
+    int* board[h+3];
     for(int i=1; i<=h; i++)
-        board[i]=(int*)calloc(w+1,sizeof(int));
+        board[i]=(int*)calloc(w+3,sizeof(int));
     int h_i=0,s_i=0,m_i=0,moves2=0,moves1=0,playern=1, score1=1,score2=0,max_round=1,curr_round=1;
     int* actions=(int*)calloc(w*h+1,sizeof(int));
     if(Load_number)
@@ -285,15 +353,15 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
         timecalculate(h_i,m_i,s_i);
         printf("Player %d choose a column:",playern);
         printf("\nType 0 to close \nType -1 for undo  \nType -2 for redo  \nType -3 for save\nType -4 to go back to main menu\n");
-        printf(" CURRENT ROUND : %d \n",curr_round);
+        printf("CURRENT ROUND : %d \n",curr_round);
         int col=0;
 
         if(mode || (!mode&& playern==1))
         {
             while(true)
             {
-                col=integercheck(playern);
-                if(checkvalid(h,w,board,col))
+                col=integercheck();
+                if(checkvalid(h,w,board,col,1))
                     break;
             }
         }
@@ -302,7 +370,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
             while(true)
             {
                 col=random_col_selection(w);
-                if(checkvalid(h,w,board,col))
+                if(checkvalid(h,w,board,col,0))
                     break;
             }
         }
@@ -397,6 +465,17 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
         score1=score(h,w,board,1);
         score2=score(h,w,board,2);
     }
+    print_board(h,w,board);
+        reset();
+        red();
+        printf("player 1 score:%d         ",score1);
+        yellow();
+        printf("player 2 score:%d\n",score2);
+        red();
+        printf("player 1 moves:%d         ",(curr_round/2));
+        yellow();
+        printf("player 2 moves:%d\n",((curr_round-1)/2));
+        reset();
     if(!paused){
     if(score1>score2)
     {
@@ -421,7 +500,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
     else
     {
         printf("YOU LOSE\n");
-        printf("T8o go back to main menu press any key!!");
+        printf("To go back to main menu press any key!!");
         getch();
     }
 }
