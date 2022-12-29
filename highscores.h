@@ -1,7 +1,7 @@
 #ifndef HIGHSCORES_H_INCLUDED
 #define HIGHSCORES_H_INCLUDED
 
-#include"my_utils.h"
+
 #define MAX_HIGH_SCORES 100
 
 int n_players;

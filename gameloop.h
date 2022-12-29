@@ -1,7 +1,6 @@
 #ifndef GAMELOOP_H_INCLUDED
 #define GAMELOOP_H_INCLUDED
 
-#include"my_utils.h"
 #include"undo_redo.h"
 #include"scores.h"
 #include"save_load.h"
