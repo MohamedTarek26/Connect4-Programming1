@@ -5,18 +5,22 @@ int Height=7;
 int Width=6;
 int HighScores=10;
 
-int convert_int(char* s)
+int convert_int(char* s,int len)
 {
-    for(int i=0;i<strlen(s)-1;i++)
+
+    for(int i=0;i<len;i++)
     {
+
         if(!isdigit(s[i]))
             {return 0;}
     }
+
     if(atoi(s)<=0 || atoi(s) >100)
     {
         printf("TOO BIG VALUE\n");
         return 0;
     }
+
     return atoi(s);
 }
 int getVal(char*s,char*s1,char*s2)
@@ -24,13 +28,14 @@ int getVal(char*s,char*s1,char*s2)
     if(strstr(s,s1) && strstr(s,s2))
     {
     int start = strstr(s, s1) + strlen(s1);
-    int end =strstr(s, s2);
-    if(end>=start)
-    {
-    char* substr = malloc(end-start);
-    strncpy(substr, strstr(s, s1)+strlen(s1), end-start);
 
-    if(convert_int(substr)){printf("%d\n",convert_int(substr));return convert_int(substr);}else{printf("ERROR: Invalid %s\n",s1);return 0;}
+    int End =strstr(s, s2);
+    if(End>=start)
+    {
+    char* substrs = malloc(End-start);
+    strncpy(substrs, strstr(s, s1)+strlen(s1), End-start);
+    if(convert_int(substrs,End-start))
+    {return convert_int(substrs,End-start);}else{printf("ERROR: Invalid %s\n",s1);return 0;}
 
 
     return 1;
@@ -54,11 +59,13 @@ int ValidateXML(char*s)
      if(strstr(s,"<Configuration>") && strstr(s,"</Configuration>"))
  {
     int start = strstr(s, "<Configuration>") + strlen("<Configuration>");
-    int end =strstr(s, "</Configuration>");
-    if(end-start >=0)
+    int End =strstr(s, "</Configuration>");
+
+    if(End-start >=0)
     {
-    char* substrC = malloc(end-start);
-    strncpy(substrC, strstr(s, "<Configuration>")+strlen("<Configuration>"), end-start);
+    char* substrC = malloc(End-start);
+    strncpy(substrC, strstr(s,"<Configuration>")+strlen("<Configuration>"),End-start);
+
     int h=getVal(substrC,"<Height>","</Height>");
     int w=getVal(substrC,"<Width>","</Width>");
     int hs=getVal(substrC,"<HighScores>","</HighScores>");
