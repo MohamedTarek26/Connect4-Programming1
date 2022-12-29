@@ -16,7 +16,7 @@ void timecalculate(int hours_i,int minutes_i,int seconds_i)
 
     // calculating the rest of seconds
     seconds%=60;
-    printf(" Time passed %d:%d:%d\n",hours,minutes,seconds);
+    printf("Time passed %d:%d:%d\n",hours,minutes,seconds);
 
 }
 

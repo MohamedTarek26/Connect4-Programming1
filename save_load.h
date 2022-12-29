@@ -12,7 +12,7 @@ typedef struct{
    int seconds;
 }game_t;
 
-
+int n_games = 0;
 void update_save(game_t* saves,game_t game,int load_number,int saved_now)
 {
     if(saved_now && !load_number)
@@ -50,11 +50,15 @@ void read_save(game_t* saves)
   if (fp == NULL){
     write_save(saves);
   }
-  int n_games = 0;
-  while( fread(&saves[n_games], sizeof(game_t), 1, fp) == 1 ) {
+  int i=0;
+  while( fread(&saves[i], sizeof(game_t), 1, fp) == 1 ) {
+    if(saves[i].Current_Round != 0)
+    {
     n_games++;
+    }
+    i++;
   }
-  printf("%d",n_games);
+  printf("nagemes:%d",n_games);
   fclose(fp);
 
 }
