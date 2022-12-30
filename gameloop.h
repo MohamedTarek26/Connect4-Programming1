@@ -443,12 +443,12 @@ int med_comp_move(int h,int w,int* board[h])
         }
 
     }
-    for(int i=1;i<=2;i++)
+    for(int i=1;i<=w;i++)
         {
             if(results[i]==2)
                 return i;
         }
-    for(int i=1;i<=2;i++)
+    for(int i=1;i<=w;i++)
         {
             if(results[i]==1)
                 return i;
