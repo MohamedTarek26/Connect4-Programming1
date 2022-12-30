@@ -87,12 +87,7 @@ void read_save(game_t* saves)
   fclose(fp);
 
 }
-void print_saves(game_t* saves)
-{
-  for (int i=1; i<=3; i++) {
-    printf("%d \n",saves[i].Current_Round);
-  }
-}
+
 bool name_check(char* s)
 {
     if(!strlen(s))
@@ -235,6 +230,7 @@ int calc_row(int col,int h,int w,int* board[h])
     }
     return row;
 }
+
 void print_board(int h,int w,int* board[h])
 {
     blue();
@@ -402,7 +398,7 @@ bool checkvalid(int x,int y,int* connect[y],int col,int mode)
             return true;
         else
         {
-            if(mode)
+            if(!mode)
             {
                 printf("Enter an empty column!!!\n");
             }
@@ -411,7 +407,7 @@ bool checkvalid(int x,int y,int* connect[y],int col,int mode)
     }
     else
     {
-        if(mode)
+        if(!mode)
         {
             printf("Enter a valid column!!!\n");
         }
@@ -419,6 +415,53 @@ bool checkvalid(int x,int y,int* connect[y],int col,int mode)
     }
 }
 
+
+int med_comp_move(int h,int w,int* board[h])
+{
+
+    int results[w+1];
+
+    for(int i=1;i<=w;i++)
+    {
+        int score1_i=score(h,w,board,1);
+        int score2_i=score(h,w,board,2);
+        if(checkvalid(h,w,board,i,1))
+        {
+            int points=0;
+            int score1_f,score2_f;
+            int row = calc_row(i,h,w,board);
+            board[row][i]=2;
+            score2_f=score(h,w,board,2);
+            if(score2_f>score2_i)
+                points++;
+            board[row][i]=1;
+            score1_f=score(h,w,board,1);
+            if(score1_f>score1_i)
+                points++;
+            board[row][i]=0;
+            results[i]=points;
+        }
+
+    }
+    for(int i=1;i<=2;i++)
+        {
+            if(results[i]==2)
+                return i;
+        }
+    for(int i=1;i<=2;i++)
+        {
+            if(results[i]==1)
+                return i;
+        }
+        int rmove;
+    while(true)
+            {
+                rmove=random_col_selection(w);
+                if(checkvalid(h,w,board,rmove,1))
+                    break;
+            }
+        return rmove;
+}
 void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
 {
 
@@ -472,6 +515,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
         printf("player 1 score:%d         ",score1);
         yellow();
         printf("player 2 score:%d\n",score2);
+
         red();
 
 
@@ -485,22 +529,30 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
         printf("CURRENT ROUND : %d \n",curr_round);
         int col=0;
 
-        if(mode || (!mode&& playern==1))
+        if(!mode || (mode&& playern==1))
         {
             while(true)
             {
                 col=integercheck();
-                if(checkvalid(h,w,board,col,1))
+                if(checkvalid(h,w,board,col,0))
                     break;
             }
         }
         else
         {
+            if(mode==1)
+            {
+
             while(true)
             {
                 col=random_col_selection(w);
-                if(checkvalid(h,w,board,col,0))
+                if(checkvalid(h,w,board,col,1))
                     break;
+            }
+            }
+            else
+            {
+                col = med_comp_move(h,w,board);
             }
         }
 
@@ -514,7 +566,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
                 printf("You can't undo\n");
                 continue;
             }
-            if(mode)
+            if(!mode)
                 undo(actions[curr_round-1],h,w,board,playern,&curr_round,max_round);
             else
             {
@@ -525,7 +577,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
         }
         else if(col==-2)
         {
-            if(mode)
+            if(!mode)
                 redo(actions[curr_round],h,w,board,playern,&curr_round,max_round);
             else
             {
@@ -618,7 +670,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
             while(!name_check(name));
             score_winner=score1;
         }
-        else if(score2>score1 && mode==1)
+        else if(score2>score1 && mode==0)
         {
             printf("Player %d is the winner \n Please enter your name : ",2);
             do

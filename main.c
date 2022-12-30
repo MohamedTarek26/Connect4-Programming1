@@ -20,8 +20,9 @@ void main_menu(game_t* saves,player_t* topscores)
     while(checking_input_menu)
     {
     checking_input_menu=0;
-    printf("To start a new single player game enter 1\n");
-    printf("To start a new multiplayer player game enter 2\n");
+    printf("To start a new single player easy game enter 1\n");
+    printf("To start a new single player medium game enter 2\n");
+    printf("To start a new multiplayer player game enter 3\n");
     printf("To load a previous game enter 3\n");
     printf("To display the top players enter 4\n");
     printf("To exit press 5\n");
@@ -40,18 +41,25 @@ void main_menu(game_t* saves,player_t* topscores)
             ticks=clock();
             start_time=((int)ticks / CLOCKS_PER_SEC);
             end_time=0;
-            game_loop(my_configs.Height,my_configs.Width,0,0,saves);
+            game_loop(my_configs.Height,my_configs.Width,1,0,saves);
             system("cls");
             break;
         case 2:
+            ticks=clock();
+            start_time=((int)ticks / CLOCKS_PER_SEC);
+            end_time=0;
+            game_loop(my_configs.Height,my_configs.Width,2,0,saves);
+            system("cls");
+            break;
+        case 3:
             ticks;
             ticks=clock();
             start_time=((int)ticks / CLOCKS_PER_SEC);
             end_time=0;
-            game_loop(my_configs.Height,my_configs.Width,1,0,saves);
+            game_loop(my_configs.Height,my_configs.Width,0,0,saves);
             system("cls");
             break;
-        case 3:
+        case 4:
             ticks;
             ticks=clock();
             start_time=((int)ticks / CLOCKS_PER_SEC);
@@ -88,14 +96,14 @@ void main_menu(game_t* saves,player_t* topscores)
             printf("Loading a saved game");
             system("cls");
             break ;
-        case 4:
+        case 5:
             g=0;
             printf("Displaying top players\n");
             print_highscores(topscores,my_configs.HighScores);
             system("cls");
 
             break;
-        case 5:
+        case 6:
             printf("Exiting the game");
             exit(0);
             break;
@@ -110,9 +118,7 @@ void main_menu(game_t* saves,player_t* topscores)
 int main()
 {
     //intializes default values for configuration before reading the xml
-    my_configs.Height=9;
-    my_configs.Width=7;
-    my_configs.HighScores=10;
+
     Load_Config();    //Loads data from xml if any
 
 

@@ -18,9 +18,14 @@ int convert_int(char* s,int len)
             {return 0;}
     }
 
-    if(atoi(s)<=0 || atoi(s) >100)
+    if(atoi(s) >100)
     {
         printf("TOO BIG VALUE\n");
+        return 0;
+    }
+    if(atoi(s)<=0 )
+    {
+        printf("Invalid value (negative number)\n");
         return 0;
     }
 
@@ -105,12 +110,15 @@ int ValidateXML(char*s)
 }
 void Load_Config()
 {
+    my_configs.Height=9;
+    my_configs.Width=7;
+    my_configs.HighScores=10;
     FILE* fp;
- int b=1;
+ int flag_null=1;
  char s[2048];
  fp = fopen("config.xml", "r");
 
- if ( fp == NULL ){ b=0;printf("File error, can't read! \n");}
+ if ( fp == NULL ){ flag_null=0;printf("File error, can't read! \n");}
  else
  {
 
@@ -124,14 +132,14 @@ void Load_Config()
  }while( !feof(fp) );
  fclose(fp);
  }
- bool tamam=ValidateXML(s);
-if (!b || !tamam)
+ bool flag_validate=ValidateXML(s);
+if (!flag_null || !flag_validate)
 {
 for(int i=0;i<3;i++){
     printf("Enter a path to a valid Configuration file : \n");
     int b=1;
     char path[100];
-    scanf("%s",path);
+    gets(path);
     FILE* fp;
     char ss[2048]=" ";
     fp = fopen(path, "r");
@@ -149,8 +157,8 @@ for(int i=0;i<3;i++){
     }while( !feof(fp) );
     fclose(fp);
  }
- tamam=ValidateXML(ss);
-    if(b && tamam)
+ flag_validate=ValidateXML(ss);
+    if(flag_null && flag_validate)
     {
         break;
     }
@@ -158,7 +166,7 @@ for(int i=0;i<3;i++){
 
 }
 
-    if(!b||!tamam)
+    if(!flag_null||!flag_validate)
     {
         printf("Then we use default values\nwidth=7\nheight=9\nhighscores=10\n");
     }

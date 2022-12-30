@@ -61,7 +61,7 @@ void update_highscores(char* name,int score,player_t* arr)
             already=1;break;
         }
     }
-    if(!already)
+    if(!already && score>arr[0].score)
     {
     strcpy(arr[0].name,name);
     arr[0].score=score;
