@@ -18,12 +18,13 @@ void update_save(game_t* saves,game_t game,int load_number,int saved_now)
     if(saved_now && !load_number)
     {
         saves[1]=game;
-        return;
     }
-    if(load_number == 0)
+    else if(load_number == 0)
     {game_t game1= saves[1];
     game_t game2= saves[2];
+
     saves[3]=game2;
+
     saves[2]=game1;
     saves[1]=game;}
     else
@@ -51,6 +52,7 @@ void read_save(game_t* saves)
     write_save(saves);
   }
   int i=0;
+  n_games=0;
   while( fread(&saves[i], sizeof(game_t), 1, fp) == 1 ) {
     if(saves[i].Current_Round != 0)
     {

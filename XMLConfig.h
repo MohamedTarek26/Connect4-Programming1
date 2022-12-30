@@ -1,10 +1,13 @@
 #ifndef XMLCONFIG_H_INCLUDED
 #define XMLCONFIG_H_INCLUDED
 
-int Height=9;
-int Width=7;
-int HighScores=10;
 
+typedef struct{
+   int Height;
+   int Width;
+   int HighScores;
+}config_t;
+config_t my_configs;
 int convert_int(char* s,int len)
 {
 
@@ -56,7 +59,7 @@ int getVal(char*s,char*s1,char*s2)
 
 int ValidateXML(char*s)
 {
-    printf("I went here %s\n",s);
+
      if(strstr(s,"<Configuration>") && strstr(s,"</Configuration>"))
  {
     int start = strstr(s, "<Configuration>") + strlen("<Configuration>");
@@ -81,9 +84,9 @@ int ValidateXML(char*s)
         printf("Too small dimensions\n");
         return 0;
     }
-    Height=h;
-    Width=w;
-    HighScores=hs;
+    my_configs.Height=h;
+    my_configs.Width=w;
+    my_configs.HighScores=hs;
 
     free(substrC);
     }
@@ -161,7 +164,7 @@ for(int i=0;i<3;i++){
     }
     else
    {
-       printf("Values are:\nwidth=%d\nheight=%d\nhighscores=%d\n",Width,Height,HighScores);
+       printf("Values are:\nwidth=%d\nheight=%d\nhighscores=%d\n",my_configs.Width,my_configs.Height,my_configs.HighScores);
    }
      printf("Press Any Key to Continue\n");
 getch();

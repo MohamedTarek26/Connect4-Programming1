@@ -9,13 +9,14 @@
 #include "gameloop.h"
 #include "highscores.h"
 #include "XMLConfig.h"
-#include "save_load.h"
+
 int g=1;
 void main_menu(game_t* saves,player_t* topscores)
 {
         int check_main_menu;
     int checking_input_menu=1;
     printf("Welcome to connect four\n");
+    read_save(saves);
     while(checking_input_menu)
     {
     checking_input_menu=0;
@@ -39,7 +40,7 @@ void main_menu(game_t* saves,player_t* topscores)
             ticks=clock();
             start_time=((int)ticks / CLOCKS_PER_SEC);
             end_time=0;
-            game_loop(Height,Width,0,0,saves);
+            game_loop(my_configs.Height,my_configs.Width,0,0,saves);
             system("cls");
             break;
         case 2:
@@ -47,7 +48,7 @@ void main_menu(game_t* saves,player_t* topscores)
             ticks=clock();
             start_time=((int)ticks / CLOCKS_PER_SEC);
             end_time=0;
-            game_loop(Height,Width,1,0,saves);
+            game_loop(my_configs.Height,my_configs.Width,1,0,saves);
             system("cls");
             break;
         case 3:
@@ -90,7 +91,7 @@ void main_menu(game_t* saves,player_t* topscores)
         case 4:
             g=0;
             printf("Displaying top players\n");
-            print_highscores(topscores,HighScores);
+            print_highscores(topscores,my_configs.HighScores);
             system("cls");
 
             break;
@@ -108,8 +109,11 @@ void main_menu(game_t* saves,player_t* topscores)
 }
 int main()
 {
-
-    Load_Config();    //Loads data from xml
+    //intializes default values for configuration before reading the xml
+    my_configs.Height=9;
+    my_configs.Width=7;
+    my_configs.HighScores=10;
+    Load_Config();    //Loads data from xml if any
 
 
     player_t  topscores[MAX_HIGH_SCORES]; //defines topscores array
@@ -125,13 +129,6 @@ int main()
     read_highscores(topscores);//read scores array from HighScores.bin
     system("cls"); // for clearing
 
-    /*for main menu
-    1.single player  game_loop(Height,Width,0,0,saves)
-    2.multiplayer player  game_loop(Height,Width,1,0,saves)
-    3.loaded game player  game_loop(saves[L].boardrows,saves[L].boardcolumns,saves[L].mode,L,saves)
-    4.High Scores print_highscores(topscores,HighScores)
-    */
-
     while(true)
     {
     main_menu(saves,topscores);
@@ -141,7 +138,7 @@ int main()
             int sc=score_winner;
             update_highscores(s,sc,topscores);//update highscores array
             write_highscores(topscores);//writes new highscore data
-            print_highscores(topscores,HighScores);//print rankings
+            print_highscores(topscores,my_configs.HighScores);//print rankings
         }
         system("cls");
     }
