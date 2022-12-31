@@ -23,9 +23,9 @@ void main_menu(game_t* saves,player_t* topscores)
     printf("To start a new single player easy game enter 1\n");
     printf("To start a new single player medium game enter 2\n");
     printf("To start a new multiplayer player game enter 3\n");
-    printf("To load a previous game enter 3\n");
-    printf("To display the top players enter 4\n");
-    printf("To exit press 5\n");
+    printf("To load a previous game enter 4\n");
+    printf("To display the top players enter 5\n");
+    printf("To exit press 6\n");
     printf("please enter a choice:");
 
 

@@ -631,7 +631,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
         }
         else
         {
-
+            system("cls");
             play(actions,col,h,w,board,playern,&curr_round,&max_round);
 
 
