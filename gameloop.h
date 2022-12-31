@@ -420,11 +420,11 @@ int med_comp_move(int h,int w,int* board[h])
 {
 
     int results[w+1];
-
+    int score1_i=score(h,w,board,1);
+    int score2_i=score(h,w,board,2);
     for(int i=1;i<=w;i++)
     {
-        int score1_i=score(h,w,board,1);
-        int score2_i=score(h,w,board,2);
+
         if(checkvalid(h,w,board,i,1))
         {
             int points=0;
@@ -433,14 +433,16 @@ int med_comp_move(int h,int w,int* board[h])
             board[row][i]=2;
             score2_f=score(h,w,board,2);
             if(score2_f>score2_i)
-                points++;
+                {points+=1;}
             board[row][i]=1;
             score1_f=score(h,w,board,1);
             if(score1_f>score1_i)
-                points++;
+                {points++;}
             board[row][i]=0;
             results[i]=points;
+
         }
+
 
     }
     for(int i=1;i<=w;i++)
@@ -629,7 +631,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
         }
         else
         {
-            system("cls");
+
             play(actions,col,h,w,board,playern,&curr_round,&max_round);
 
 
