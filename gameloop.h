@@ -389,7 +389,7 @@ int integercheck()
 
 bool checkvalid(int x,int y,int* connect[y],int col,int mode)
 {
-    if(col==-1 || col==-2 || col==-3 || col==0 || col == -4)
+    if(col==-1 || col==-2 || col==-3 || col==0 || col == -4 || (col==-5 && mode==1))
         return true;
     int i=x-1,j=col;
     if(j>=1&&j<=y)
@@ -504,6 +504,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
     }
     //print_board(h,w,board);
     bool paused=0;
+    bool show_best_move=0;
     while (curr_round!=(w*h+1))
     {
         print_board(h,w,board);
@@ -524,10 +525,16 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
         printf("player 1 moves:%d         ",(curr_round/2));
         yellow();
         printf("player 2 moves:%d\n",((curr_round-1)/2));
+        if(show_best_move)
+        {printf("best move is %d\n",med_comp_move(h,w,board));show_best_move=0;}
         reset();
         timecalculate(h_i,m_i,s_i);
         printf("Player %d choose a column:",playern);
         printf("\nType 0 to close \nType -1 for undo  \nType -2 for redo  \nType -3 for save\nType -4 to go back to main menu\n");
+        if(mode==1)
+        {
+            printf("Type -5 for best move \n");
+        }
         printf("CURRENT ROUND : %d \n",curr_round);
         int col=0;
 
@@ -536,7 +543,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
             while(true)
             {
                 col=integercheck();
-                if(checkvalid(h,w,board,col,0))
+                if(checkvalid(h,w,board,col,mode))
                     break;
             }
         }
@@ -628,6 +635,11 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
             score_winner=0;
             paused=1;
             break;
+        }
+        else if(col==-5 && mode ==1 )
+        {
+            show_best_move=1;
+            system("cls");
         }
         else
         {
