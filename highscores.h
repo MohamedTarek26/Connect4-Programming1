@@ -12,18 +12,17 @@ typedef struct player{
 
 void InsertionSort(player_t* arr)
 {
-        player_t key;
-    int i,j;
-    for ( i = 1; i < MAX_HIGH_SCORES; i++)
+    player_t next;
+    int j;
+    for ( int i = 1; i < MAX_HIGH_SCORES; i++)
     {
-        key = arr[i];
-        j = i - 1;
-        while ( j >= 0 && arr[j].score> key.score)
+        next = arr[i];
+        int j;
+        for (j=i-1; j >= 0 && arr[j].score> next.score;j--)
         {
             arr[j + 1] = arr[j];
-            j = j - 1;
         }
-        arr[j + 1] = key;
+        arr[j + 1] = next;
     }
 
 }
