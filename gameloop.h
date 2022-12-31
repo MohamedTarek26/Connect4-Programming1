@@ -387,7 +387,7 @@ int integercheck()
     return integer;
 }
 
-bool checkvalid(int x,int y,int* connect[y],int col,int mode)
+bool checkvalid(int x,int y,int* connect[y],int col,int mode,int playern)
 {
     if(col==-1 || col==-2 || col==-3 || col==0 || col == -4 || (col==-5 && mode==1))
         return true;
@@ -407,7 +407,7 @@ bool checkvalid(int x,int y,int* connect[y],int col,int mode)
     }
     else
     {
-        if(!mode)
+        if(!mode || (mode && playern==1))
         {
             printf("Enter a valid column!!!\n");
         }
@@ -425,7 +425,7 @@ int med_comp_move(int h,int w,int* board[h])
     for(int i=1;i<=w;i++)
     {
 
-        if(checkvalid(h,w,board,i,1))
+        if(checkvalid(h,w,board,i,1,2))
         {
             int points=0;
             int score1_f,score2_f;
@@ -459,7 +459,7 @@ int med_comp_move(int h,int w,int* board[h])
     while(true)
             {
                 rmove=random_col_selection(w);
-                if(checkvalid(h,w,board,rmove,1))
+                if(checkvalid(h,w,board,rmove,1,2))
                     break;
             }
         return rmove;
@@ -543,7 +543,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
             while(true)
             {
                 col=integercheck();
-                if(checkvalid(h,w,board,col,mode))
+                if(checkvalid(h,w,board,col,mode,playern))
                     break;
             }
         }
@@ -555,7 +555,7 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
             while(true)
             {
                 col=random_col_selection(w);
-                if(checkvalid(h,w,board,col,1))
+                if(checkvalid(h,w,board,col,mode,playern))
                     break;
             }
             }
