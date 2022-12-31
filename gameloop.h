@@ -398,7 +398,7 @@ bool checkvalid(int x,int y,int* connect[y],int col,int mode,int playern)
             return true;
         else
         {
-            if(!mode)
+            if(!mode || (mode && playern==1))
             {
                 printf("Enter an empty column!!!\n");
             }
@@ -674,7 +674,6 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
             do
             {
 
-                printf("please enter your name : ");
                 scanf("%s",name);
                 gets(trash);
                 name[strlen(name)]='\0';
@@ -690,7 +689,6 @@ void game_loop(int h,int w,int mode,int Load_number,game_t* saves)
             do
             {
 
-                printf("please enter your name : \n");
                 scanf("%s",name);
                 gets(trash);
 
