@@ -91,7 +91,7 @@ void Load_Config() : it’s the function called in the main.c , it initializes t
 1.	The first X winners will appear with their scores sorted (X is the HighScores parameter passed from xml).
 2.	The program will create automatically the HighScores.bin but if you like to import an external one make sure that it’s made by our program(either the same copy or a different one) and the high scores games will be displayed normally
 3.	In case you added an external corrupted binary file then unexpected scores will appear but DO NOT WORRY THE PROGRAM WILL NOT CRASH but you have to remove the corrupted file from the directory to make the leaderboard functionality return.  
--Fourth : Load Games
+Fourth : Load Games
 1.	The loaded games will appear (<=3) choose the game you want to continue and it will load with its loaded parameters whatever the program parameters are and with all the old data loaded like score, time and current round.
 2.	The program will create automatically the save.bin but if you like to import an external one make sure that it’s made by our program(either the same copy or a different one) and the loaded games will be displayed.
 3.	In case you added an external corrupted binary file then  DO NOT WORRY THE PROGRAM WILL NOT CRASH but you have to remove the corrupted file from the directory to make the loading functionality return because it may add a garbage slot.
