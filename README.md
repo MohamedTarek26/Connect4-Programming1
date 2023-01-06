@@ -103,7 +103,7 @@ Fourth : Load Games
 1.	In each all the data like the scores, moves, time, current round and in game menu and showing best move in easy mode only.
 2.	You will be asked for your name only if you wins.
 <br/>Seventh : in game menu
-1.	It ‘s a very simple menu you can type -1 to undo ,-2 to redo , -3 to save , -4 to quit to main menu , 0 to exit and -5 to show best move in easy single mode only.
-2.	All your inputs are validated.
+ 1.	It ‘s a very simple menu you can type -1 to undo ,-2 to redo , -3 to save , -4 to quit to main menu , 0 to exit and -5 to show best move in easy single mode only.
+ 2.	All your inputs are validated.
 Eighth : Validations
 All inputs are validated in the main and in game menu , path , name, and columns so DO NOT WORRY if you mistaken an input the program will not crash
