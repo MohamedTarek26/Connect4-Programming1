@@ -78,16 +78,16 @@ int getVal(char*s,char*s1,char*s2): it searches for the two words s1 and s2 (whi
 int ValidateXML(char*s) : it searches for the configuration tags in the xml text and takes the text between the two tags and send it to the get_val function 3 times (one for each of the Height, Width, Highscores) and if one of these 3 values is wrong or undefined it returns 0 and prints a warning message but if the values are correct the it it will assign it to  my_config and returns 1.
 void Load_Config() : it’s the function called in the main.c , it initializes the my_config parameters with the default values then tries to open the default config.xml to read the game parameters , if it failed to find it or the data inside it is invalid then it will the user to type a correct path to a valid configurations file 3 times then if it failed in the 3 times to load the data it will terminate with the default values as they are.
 #	User manual:
-First : Reading configurations: 
+<br/>First : Reading configurations: 
 1.White space and any irrelevant text outside the tags of Height ,Width or High Scores will never affect the reading behavior.
 2.If  you receive a warning message then you may have entered an invalid path or non integer value for one of the game parameters or you may have mistaken the tags opening and closing  or the values are too big eg. value>100.
 3. Take care of the spelling of <Configuration> , <Height>, <Width>, <HighScores> and they must be written in the same case like that.
 4.If your input files failed 3 times the default values will be loaded Height=9,Width=7,HighScores =10.
 5.Don’t worry most of the error message are meaningful and will guide you to the error place.
-Second : Main menu:
+<br/>Second : Main menu:
 1.	The UI here is so simple just choose the action you want (1 for easy mode,2 for hard mode, 3. For multiplayer,4.to load a game,5.to display high scores 6. To quit)
 2.	If you mistaken the input a meaningful warning message will appear
-Third : Display High Scores
+-Third : Display High Scores
 1.	The first X winners will appear with their scores sorted (X is the HighScores parameter passed from xml).
 2.	The program will create automatically the HighScores.bin but if you like to import an external one make sure that it’s made by our program(either the same copy or a different one) and the high scores games will be displayed normally
 3.	In case you added an external corrupted binary file then unexpected scores will appear but DO NOT WORRY THE PROGRAM WILL NOT CRASH but you have to remove the corrupted file from the directory to make the leaderboard functionality return.  
@@ -95,15 +95,15 @@ Fourth : Load Games
 1.	The loaded games will appear (<=3) choose the game you want to continue and it will load with its loaded parameters whatever the program parameters are and with all the old data loaded like score, time and current round.
 2.	The program will create automatically the save.bin but if you like to import an external one make sure that it’s made by our program(either the same copy or a different one) and the loaded games will be displayed.
 3.	In case you added an external corrupted binary file then  DO NOT WORRY THE PROGRAM WILL NOT CRASH but you have to remove the corrupted file from the directory to make the loading functionality return because it may add a garbage slot.
-Fifth : Multiplayer 
+-Fifth : Multiplayer 
 1.	In each round it will be displayed whose turn is the current turn and all the data like the scores, moves, time, current round and in game menu.
 2.	You will be asked for your input whether it should be a valid column or a in game menu option, otherwise, a meaningful warning message will appear and we will ask for your input again
 3.	The winner will be asked for their name and then the leaderboard will be printed
-Sixth : Single 
+<br/>Sixth : Single 
 1.	In each all the data like the scores, moves, time, current round and in game menu and showing best move in easy mode only.
 2.	You will be asked for your name only if you wins.
-Seventh : in game menu
-1.	It ‘s a very simple menu you can type -1 to undo ,-2 to redo , -3 to save , -4 to quit to main menu , 0 to exit and -5 to show best move in easy single mode only.
-2.	All your inputs are validated.
+<br/>Seventh : in game menu
+ 1.	It ‘s a very simple menu you can type -1 to undo ,-2 to redo , -3 to save , -4 to quit to main menu , 0 to exit and -5 to show best move in easy single mode only.
+ 2.	All your inputs are validated.
 Eighth : Validations
 All inputs are validated in the main and in game menu , path , name, and columns so DO NOT WORRY if you mistaken an input the program will not crash
