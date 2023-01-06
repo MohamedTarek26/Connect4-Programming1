@@ -1,13 +1,14 @@
 #ifndef XMLCONFIG_H_INCLUDED
 #define XMLCONFIG_H_INCLUDED
 
-
 typedef struct{
    int Height;
    int Width;
    int HighScores;
 }config_t;
 config_t my_configs;
+
+
 int convert_int(char* s,int len)
 {
 
@@ -158,7 +159,7 @@ for(int i=0;i<3;i++){
     fclose(fp);
  }
  flag_validate=ValidateXML(ss);
-    if(flag_null && flag_validate)
+    if( flag_validate)
     {
         break;
     }
@@ -166,7 +167,7 @@ for(int i=0;i<3;i++){
 
 }
 
-    if(!flag_null||!flag_validate)
+    if(!flag_validate)
     {
         printf("Then we use default values\nwidth=7\nheight=9\nhighscores=10\n");
     }
@@ -177,4 +178,5 @@ for(int i=0;i<3;i++){
      printf("Press Any Key to Continue\n");
 getch();
 }
+
 #endif // XMLCONFIG_H_INCLUDED

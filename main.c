@@ -11,12 +11,14 @@
 #include "XMLConfig.h"
 
 int g=1;
+
 void main_menu(game_t* saves,player_t* topscores)
 {
-        int check_main_menu;
+    int check_main_menu;
     int checking_input_menu=1;
     printf("Welcome to connect four\n");
     read_save(saves);
+
     while(checking_input_menu)
     {
     checking_input_menu=0;
@@ -37,6 +39,7 @@ void main_menu(game_t* saves,player_t* topscores)
     g=1;
     switch (check_main_menu)
     {
+
         case 1:
             ticks=clock();
             start_time=((int)ticks / CLOCKS_PER_SEC);
@@ -44,6 +47,7 @@ void main_menu(game_t* saves,player_t* topscores)
             game_loop(my_configs.Height,my_configs.Width,1,0,saves);
             system("cls");
             break;
+
         case 2:
             ticks=clock();
             start_time=((int)ticks / CLOCKS_PER_SEC);
@@ -51,6 +55,7 @@ void main_menu(game_t* saves,player_t* topscores)
             game_loop(my_configs.Height,my_configs.Width,2,0,saves);
             system("cls");
             break;
+
         case 3:
             ticks;
             ticks=clock();
@@ -59,12 +64,15 @@ void main_menu(game_t* saves,player_t* topscores)
             game_loop(my_configs.Height,my_configs.Width,0,0,saves);
             system("cls");
             break;
+
         case 4:
             ticks;
             ticks=clock();
             start_time=((int)ticks / CLOCKS_PER_SEC);
             end_time=0;
+
             printf("Enter Load number\n");
+
             if(n_games==0)
             {
                 printf("There is't any loaded game\n");
@@ -73,6 +81,7 @@ void main_menu(game_t* saves,player_t* topscores)
                 system("cls");
                 continue;
             }
+
             for(int k=1;k<=n_games;k++)
             {
                 printf("%d: game %d\n",k,k);
@@ -96,6 +105,7 @@ void main_menu(game_t* saves,player_t* topscores)
             printf("Loading a saved game");
             system("cls");
             break ;
+
         case 5:
             g=0;
             printf("Displaying top players\n");
@@ -103,10 +113,12 @@ void main_menu(game_t* saves,player_t* topscores)
             system("cls");
 
             break;
+
         case 6:
             printf("Exiting the game");
             exit(0);
             break;
+
         default :
             printf("Enter a valid choice please!!\n");
             checking_input_menu=1;
@@ -115,6 +127,8 @@ void main_menu(game_t* saves,player_t* topscores)
 
     }
 }
+
+
 int main()
 {
     //intializes default values for configuration before reading the xml
@@ -131,9 +145,12 @@ int main()
         topscores[i].score=0;
         strcpy(topscores[i].name,"-");
     }
+
+
     read_save(saves);//read saves array from save.bin
     read_highscores(topscores);//read scores array from HighScores.bin
     system("cls"); // for clearing
+
 
     while(true)
     {

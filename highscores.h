@@ -1,7 +1,6 @@
 #ifndef HIGHSCORES_H_INCLUDED
 #define HIGHSCORES_H_INCLUDED
 
-
 #define MAX_HIGH_SCORES 100
 
 int n_players;
@@ -27,8 +26,10 @@ void InsertionSort(player_t* arr)
 
 }
 
+// checking if the name was already existing
 int check_names_similarity(char* name1,char*name2)
 {
+    // if different lenghts of the names
     if((int)strlen(name1)!=(int)strlen(name2))
     {
         return 0;
