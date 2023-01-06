@@ -87,15 +87,15 @@ void Load_Config() : it’s the function called in the main.c , it initializes t
 <br/>Second : Main menu:
 1.	The UI here is so simple just choose the action you want (1 for easy mode,2 for hard mode, 3. For multiplayer,4.to load a game,5.to display high scores 6. To quit)
 2.	If you mistaken the input a meaningful warning message will appear
-<br/>Third : Display High Scores
+-Third : Display High Scores
 1.	The first X winners will appear with their scores sorted (X is the HighScores parameter passed from xml).
 2.	The program will create automatically the HighScores.bin but if you like to import an external one make sure that it’s made by our program(either the same copy or a different one) and the high scores games will be displayed normally
 3.	In case you added an external corrupted binary file then unexpected scores will appear but DO NOT WORRY THE PROGRAM WILL NOT CRASH but you have to remove the corrupted file from the directory to make the leaderboard functionality return.  
-<br/>Fourth : Load Games
+-Fourth : Load Games
 1.	The loaded games will appear (<=3) choose the game you want to continue and it will load with its loaded parameters whatever the program parameters are and with all the old data loaded like score, time and current round.
 2.	The program will create automatically the save.bin but if you like to import an external one make sure that it’s made by our program(either the same copy or a different one) and the loaded games will be displayed.
 3.	In case you added an external corrupted binary file then  DO NOT WORRY THE PROGRAM WILL NOT CRASH but you have to remove the corrupted file from the directory to make the loading functionality return because it may add a garbage slot.
-<br/>Fifth : Multiplayer 
+-Fifth : Multiplayer 
 1.	In each round it will be displayed whose turn is the current turn and all the data like the scores, moves, time, current round and in game menu.
 2.	You will be asked for your input whether it should be a valid column or a in game menu option, otherwise, a meaningful warning message will appear and we will ask for your input again
 3.	The winner will be asked for their name and then the leaderboard will be printed
